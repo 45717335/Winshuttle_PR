@@ -46,7 +46,7 @@ Private Type RECT
     Bottom As Long
 End Type
 
-'»ñÈ¡¹â±êĞÎ×´£¨ÓÃ¹â±ê¾ä±ú±êÖ¾¹â±êĞÎ×´£©
+'è·å–å…‰æ ‡å½¢çŠ¶ï¼ˆç”¨å…‰æ ‡å¥æŸ„æ ‡å¿—å…‰æ ‡å½¢çŠ¶ï¼‰
 
 Private Declare Function GetCursorInfo Lib "user32.dll" (ByRef pci As CURSORINFO) As Boolean
 
@@ -65,10 +65,10 @@ End Type
 
 
 
-'»ñÈ¡¹â±êĞÎ×´£¨ÓÃ¹â±ê¾ä±ú±êÖ¾¹â±êĞÎ×´£©
+'è·å–å…‰æ ‡å½¢çŠ¶ï¼ˆç”¨å…‰æ ‡å¥æŸ„æ ‡å¿—å…‰æ ‡å½¢çŠ¶ï¼‰
 
 
-'¹â±êÌØÕ÷Öµ
+'å…‰æ ‡ç‰¹å¾å€¼
 
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 Private Declare Function GetIconInfo Lib "user32" (ByVal hIcon As Long, icoinfo As ICONINFO) As Long
@@ -95,17 +95,17 @@ Private Type ICONINFO
     hBMColor As Long
 End Type
 
-'¹â±êÌØÕ÷Öµ
+'å…‰æ ‡ç‰¹å¾å€¼
 
 
 
 
 
 
-'»ñÈ¡¹â±êĞÎ×´£¨ÓÃ¹â±ê¾ä±ú±êÖ¾¹â±êĞÎ×´£©
+'è·å–å…‰æ ‡å½¢çŠ¶ï¼ˆç”¨å…‰æ ‡å¥æŸ„æ ‡å¿—å…‰æ ‡å½¢çŠ¶ï¼‰
 
 
-'¹â±êÌØÕ÷Öµ
+'å…‰æ ‡ç‰¹å¾å€¼
 
 'Private Type POINT
 '    x As Long
@@ -121,7 +121,7 @@ End Type
 
 
 
-'¹â±êÌØÕ÷Öµ
+'å…‰æ ‡ç‰¹å¾å€¼
 
 
 
@@ -139,8 +139,8 @@ Private Declare Function GetWindowText Lib "user32" Alias "GetWindowTextA" (ByVa
 Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
 Private Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 Enum JpMode
-theScreen = 0 'È«ÆÁ½ØÍ¼
-theform = 1 'µ±Ç°½¹µã´°¿Ú½ØÍ¼
+theScreen = 0 'å…¨å±æˆªå›¾
+theform = 1 'å½“å‰ç„¦ç‚¹çª—å£æˆªå›¾
 End Enum
 Private Declare Function GetClipboardData Lib "user32" (ByVal wFormat As Long) As Long
 Private Declare Function CloseClipboard Lib "user32" () As Long
@@ -173,8 +173,8 @@ Private Declare Function CLSIDFromString Lib "ole32" (ByVal lpszCLSID As Long, c
 
 Private Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Function GetDIBits Lib "gdi32" (ByVal aHDC As Long, ByVal hBitmap As Long, ByVal nStartScan As Long, ByVal nNumScans As Long, lpBits As Any, lpBI As BITMAPINFO, ByVal wUsage As Long) As Long
-Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long '»ñÈ¡¾ä±ú
-Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As Long, ByVal hdc As Long) As Long 'ÊÍ·ÅDC
+Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long 'è·å–å¥æŸ„
+Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As Long, ByVal hdc As Long) As Long 'é‡Šæ”¾DC
 Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
 Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
 
@@ -187,20 +187,20 @@ Private Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
 
 
 
-'ÑÕÉ«±í
+'é¢œè‰²è¡¨
 Private Type RGBQUAD
     rgbBlue As Byte
     rgbGreen As Byte
     rgbRed As Byte
-    rgbAlpha As Byte   'Í¸Ã÷Í¨µÀ
+    rgbAlpha As Byte   'é€æ˜é€šé“
 End Type
 Private Type BITMAPINFOHEADER
-    biSize As Long          'Î»Í¼´óĞ¡
+    biSize As Long          'ä½å›¾å¤§å°
     biWidth As Long
     biHeight As Long
     biPlanes As Integer
-    biBitCount As Integer   'ĞÅÏ¢Í·³¤¶È
-    biCompression As Long   'Ñ¹Ëõ·½Ê½
+    biBitCount As Integer   'ä¿¡æ¯å¤´é•¿åº¦
+    biCompression As Long   'å‹ç¼©æ–¹å¼
     biSizeImage As Long
     biXPelsPerMeter As Long
     biYPelsPerMeter As Long
@@ -211,7 +211,7 @@ Private Type BITMAPINFO
     bmiHeader As BITMAPINFOHEADER
     bmiColors As RGBQUAD
 End Type
-'Í¼Æ¬ÎÄ¼şÍ·
+'å›¾ç‰‡æ–‡ä»¶å¤´
 Private Const DIB_RGB_COLORS = 0 '  color table in RGBs
 'Dim BI As BITMAPINFO
 'Dim BI1 As BITMAPINFO
@@ -246,14 +246,14 @@ ShowWindow hwnd, SW_SHOW
 delay 200
                      
     'AppActivate win_tit
-    'Çå¿ÕPDM²éÑ¯¿ò
+    'æ¸…ç©ºPDMæŸ¥è¯¢æ¡†
     'AppActivate Win_tit
-    'showwindow ´úÌæAppActivate,ÒòÎªºóÕßÔÚ´¦ÀíIE¶à´°¿ÚÊ±ºò±¨´í5
+    'showwindow ä»£æ›¿AppActivate,å› ä¸ºåè€…åœ¨å¤„ç†IEå¤šçª—å£æ—¶å€™æŠ¥é”™5
     Dim L As Long
     Dim R As Long
     Dim T As Long
     Dim b As Long
-    'ÎªÊ²Ã´ÖØ¸´´Ë¶Î´úÂë
+    'ä¸ºä»€ä¹ˆé‡å¤æ­¤æ®µä»£ç 
     hwnd = my_findwindow(Win_name)
     ' hwnd = FindWindow(vbNullString, win_tit)
    ' If hwnd = 0 Then
@@ -268,8 +268,8 @@ delay 200
     'End If
    ' Else
   '  End If
-    'ÎªÊ²Ã´ÖØ¸´´Ë¶Î´úÂë
-    'ÒòÎªShowWindow ºÍ AppActivate ÒıÆğÁË hwnd µÄ±ä»¯£¬Ô­ÒòÔİÎ´Öª(20150525xuefeng.gao@thyssenkrupp.com)
+    'ä¸ºä»€ä¹ˆé‡å¤æ­¤æ®µä»£ç 
+    'å› ä¸ºShowWindow å’Œ AppActivate å¼•èµ·äº† hwnd çš„å˜åŒ–ï¼ŒåŸå› æš‚æœªçŸ¥(20150525xuefeng.gao@thyssenkrupp.com)
     Get_WR hwnd, L, T, R, b
  
     Dim s_x As Integer
@@ -309,10 +309,10 @@ End Function
 Private Function haveItem(mCol As Collection, vntIndexKey As Variant) As StdPicture
     Err.Clear
     On Error GoTo GetItemError
-    'ÒıÓÃ¼¯ºÏÖĞµÄÒ»¸öÔªËØÊ±Ê¹ÓÃ¡£
-    'vntIndexKey °üº¬¼¯ºÏµÄË÷Òı»ò¹Ø¼ü×Ö£¬
-    'ÕâÊÇÎªÊ²Ã´ÒªÉùÃ÷Îª Variant µÄÔ­Òò
-    'Óï·¨£ºSet foo = x.Item(xyz) or Set foo = x.Item(5)
+    'å¼•ç”¨é›†åˆä¸­çš„ä¸€ä¸ªå…ƒç´ æ—¶ä½¿ç”¨ã€‚
+    'vntIndexKey åŒ…å«é›†åˆçš„ç´¢å¼•æˆ–å…³é”®å­—ï¼Œ
+    'è¿™æ˜¯ä¸ºä»€ä¹ˆè¦å£°æ˜ä¸º Variant çš„åŸå› 
+    'è¯­æ³•ï¼šSet foo = x.Item(xyz) or Set foo = x.Item(5)
     Set haveItem = mCol(vntIndexKey)
     Exit Function
     
@@ -323,11 +323,11 @@ End Function
 
 
 Private Function P_SPLIT(ByVal txtRange, ByVal splitter As String, Optional ByVal get_index As Integer = 0)
-'²ğ·Ö×Ö·û´®£¬
-'get_index=0    Ôò·µ»Ø±»²ğ·Ö³öÀ´µÄµÚÒ»¸ö×Ö·û´®
-'get_index=1£¬2£¬3    Ôò·µ»Ø±»²ğ·Ö³öÀ´µÄµÚ¶ş¡¢Èı¡¢ËÄ¸ö×Ö·û´«
-'get_index=-1£¬-2£¬-3    Ôò·µ»Ø±»²ğ·Ö³öÀ´µÄµ¹ÊıµÚÒ»¡¢¶ş¡¢Èı¸ö×Ö·û´«
-'Ô½½ç·µ»Ø ""
+'æ‹†åˆ†å­—ç¬¦ä¸²ï¼Œ
+'get_index=0    åˆ™è¿”å›è¢«æ‹†åˆ†å‡ºæ¥çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²
+'get_index=1ï¼Œ2ï¼Œ3    åˆ™è¿”å›è¢«æ‹†åˆ†å‡ºæ¥çš„ç¬¬äºŒã€ä¸‰ã€å››ä¸ªå­—ç¬¦ä¼ 
+'get_index=-1ï¼Œ-2ï¼Œ-3    åˆ™è¿”å›è¢«æ‹†åˆ†å‡ºæ¥çš„å€’æ•°ç¬¬ä¸€ã€äºŒã€ä¸‰ä¸ªå­—ç¬¦ä¼ 
+'è¶Šç•Œè¿”å› ""
     Dim a As Variant
     Dim b As Variant
     Dim c As Variant
@@ -349,9 +349,9 @@ End Function
 
 
 Private Function MEMO_LClick_PIC(win_tit As String, Pic_s As StdPicture, x As Integer, y As Integer) As Boolean
-'º¯Êı¹¦ÄÜ
-'µã»÷ ´°¿ÚÃû³ÆÎªWin_name,µÄ´°¿ÚÖĞ£¬µÄÒ»ÕÅÍ¼Æ¬
-'ÕâÕÅÍ¼Æ¬ ¸ñÊ½ÎªstdPicture
+'å‡½æ•°åŠŸèƒ½
+'ç‚¹å‡» çª—å£åç§°ä¸ºWin_name,çš„çª—å£ä¸­ï¼Œçš„ä¸€å¼ å›¾ç‰‡
+'è¿™å¼ å›¾ç‰‡ æ ¼å¼ä¸ºstdPicture
 
 '111111111111111111
 'my_findwindow
@@ -388,14 +388,14 @@ ShowWindow hwnd, SW_SHOW
 delay 200
                      
     'AppActivate win_tit
-    'Çå¿ÕPDM²éÑ¯¿ò
+    'æ¸…ç©ºPDMæŸ¥è¯¢æ¡†
     'AppActivate Win_tit
-    'showwindow ´úÌæAppActivate,ÒòÎªºóÕßÔÚ´¦ÀíIE¶à´°¿ÚÊ±ºò±¨´í5
+    'showwindow ä»£æ›¿AppActivate,å› ä¸ºåè€…åœ¨å¤„ç†IEå¤šçª—å£æ—¶å€™æŠ¥é”™5
     Dim L As Long
     Dim R As Long
     Dim T As Long
     Dim b As Long
-    'ÎªÊ²Ã´ÖØ¸´´Ë¶Î´úÂë
+    'ä¸ºä»€ä¹ˆé‡å¤æ­¤æ®µä»£ç 
     hwnd = my_findwindow(win_tit)
     ' hwnd = FindWindow(vbNullString, win_tit)
    ' If hwnd = 0 Then
@@ -410,8 +410,8 @@ delay 200
     'End If
    ' Else
   '  End If
-    'ÎªÊ²Ã´ÖØ¸´´Ë¶Î´úÂë
-    'ÒòÎªShowWindow ºÍ AppActivate ÒıÆğÁË hwnd µÄ±ä»¯£¬Ô­ÒòÔİÎ´Öª(20150525xuefeng.gao@thyssenkrupp.com)
+    'ä¸ºä»€ä¹ˆé‡å¤æ­¤æ®µä»£ç 
+    'å› ä¸ºShowWindow å’Œ AppActivate å¼•èµ·äº† hwnd çš„å˜åŒ–ï¼ŒåŸå› æš‚æœªçŸ¥(20150525xuefeng.gao@thyssenkrupp.com)
     Get_WR hwnd, L, T, R, b
  
     Dim s_x As Integer
@@ -436,41 +436,41 @@ Dim str2 As String
 
 
 
-'µÚÒ»´Î³¢ÊÔ£º Ê¹ÓÃ×î´«Í³µÄº¯Êı£¬·µ»Ø´°¿Ú¾ä±ú£¬Èç¹ûÊ§°Ü£¬ÔòÕÒÀàËÆµÄ½øĞĞÆ¥Åä
+'ç¬¬ä¸€æ¬¡å°è¯•ï¼š ä½¿ç”¨æœ€ä¼ ç»Ÿçš„å‡½æ•°ï¼Œè¿”å›çª—å£å¥æŸ„ï¼Œå¦‚æœå¤±è´¥ï¼Œåˆ™æ‰¾ç±»ä¼¼çš„è¿›è¡ŒåŒ¹é…
 my_findwindow = FindWindow(vbNullString, winname)
 If my_findwindow > 0 Then Exit Function
-'Ê¹ÓÃ×î´«Í³µÄº¯Êı£¬·µ»Ø´°¿Ú¾ä±ú£¬Èç¹ûÊ§°Ü£¬ÔòÕÒÀàËÆµÄ½øĞĞÆ¥Åä
+'ä½¿ç”¨æœ€ä¼ ç»Ÿçš„å‡½æ•°ï¼Œè¿”å›çª—å£å¥æŸ„ï¼Œå¦‚æœå¤±è´¥ï¼Œåˆ™æ‰¾ç±»ä¼¼çš„è¿›è¡ŒåŒ¹é…
 
 
 
-'µÚ¶ş´Î³¢ÊÔ£º ÏàËÆ»òÕß°üº¬
-'´¦Àí´°¿ÚÃûÖĞÓĞÌØÊâ×Ö·ûµÄ´°¿Ú
+'ç¬¬äºŒæ¬¡å°è¯•ï¼š ç›¸ä¼¼æˆ–è€…åŒ…å«
+'å¤„ç†çª—å£åä¸­æœ‰ç‰¹æ®Šå­—ç¬¦çš„çª—å£
 Dim str1 As String
 'Dim all_windows() As wininfo, arr_out(1 To 1000, 1 To 1)
 'Dim all_windows() As wininfo, arr_out(1 To 1000, 1 To 1)
 'Dim my_handle As Long, my_title As String * 100, title_len As Long, i As Long, j As Long
 Dim my_handle As Long, my_title As String * 200, title_len As Long, i As Long, j As Long
 
-'=================Èç¹û±¾Éí¾ÍÊÇlong²¢ÇÒÓĞ´°¿ÚÃû³ÆÔòÖ±½Ó·µ»Ø¸Ãlong
+'=================å¦‚æœæœ¬èº«å°±æ˜¯longå¹¶ä¸”æœ‰çª—å£åç§°åˆ™ç›´æ¥è¿”å›è¯¥long
 If c_long(winname) > 0 Then
 If GetWindowText(c_long(winname), my_title, Len(my_title)) > 0 Then
 my_findwindow = c_long(winname)
 Exit Function
 End If
 End If
-'=================Èç¹û±¾Éí¾ÍÊÇlong²¢ÇÒÓĞ´°¿ÚÃû³ÆÔòÖ±½Ó·µ»Ø¸Ãlong
+'=================å¦‚æœæœ¬èº«å°±æ˜¯longå¹¶ä¸”æœ‰çª—å£åç§°åˆ™ç›´æ¥è¿”å›è¯¥long
 
 
 
-my_handle = FindWindowEx(0, 0, vbNullString, vbNullString) 'ËÑË÷µÚÒ»¸ö´°¿Ú,µÚÒ»¸ö0´ú±íwindows×ÀÃæ£¬µÚ¶ş¸ö0´ú±íÕÒµÚ0¸ö×Ó´°¿ÚµÄÏÂÒ»¸ö´°¿Ú
-  Do While my_handle <> 0 'ÕÒµ½´°¿ÚµÄ»°
+my_handle = FindWindowEx(0, 0, vbNullString, vbNullString) 'æœç´¢ç¬¬ä¸€ä¸ªçª—å£,ç¬¬ä¸€ä¸ª0ä»£è¡¨windowsæ¡Œé¢ï¼Œç¬¬äºŒä¸ª0ä»£è¡¨æ‰¾ç¬¬0ä¸ªå­çª—å£çš„ä¸‹ä¸€ä¸ªçª—å£
+  Do While my_handle <> 0 'æ‰¾åˆ°çª—å£çš„è¯
     DoEvents
-    'my_title = String$(100, Chr$(0)) 'APIµ÷ÓÃÖ»½ÓÊÜ¶¨³¤×Ö·û´®£¬ËùÒÔÒªÃ´ÉùÃ÷Îª as string * ³¤¶È£¬ÒªÃ´¾ÍÓÃÕâÀïµÄÓï¾ä¸ñÊ½»¯Ò»ÏÂ
+    'my_title = String$(100, Chr$(0)) 'APIè°ƒç”¨åªæ¥å—å®šé•¿å­—ç¬¦ä¸²ï¼Œæ‰€ä»¥è¦ä¹ˆå£°æ˜ä¸º as string * é•¿åº¦ï¼Œè¦ä¹ˆå°±ç”¨è¿™é‡Œçš„è¯­å¥æ ¼å¼åŒ–ä¸€ä¸‹
     title_len = GetWindowText(my_handle, my_title, Len(my_title))
-    If title_len > 0 Then    'Èç¹û´°¿Ú±êÌâ´æÔÚ£¬ÄÇÃ´¾Í»á·µ»Ø´°¿Ú±êÌâµÄ³¤¶È
+    If title_len > 0 Then    'å¦‚æœçª—å£æ ‡é¢˜å­˜åœ¨ï¼Œé‚£ä¹ˆå°±ä¼šè¿”å›çª—å£æ ‡é¢˜çš„é•¿åº¦
         j = j + 1
         str1 = ""
-        str1 = Left$(my_title, title_len) '°´³¤¶È½ØÈ¡½á¹û¼´¿É
+        str1 = Left$(my_title, title_len) 'æŒ‰é•¿åº¦æˆªå–ç»“æœå³å¯
         'If Len(str1) > Len(winname) Then
         'str1 = Left(str1, Len(winname))
        ' End If
@@ -487,23 +487,23 @@ my_handle = FindWindowEx(0, 0, vbNullString, vbNullString) 'ËÑË÷µÚÒ»¸ö´°¿Ú,µÚÒ»¸
           
         End If
     End If
-    my_handle = FindWindowEx(0, my_handle, vbNullString, vbNullString) '¼ÌĞøÕÒÏÂÒ»¸ö´°¿Ú
+    my_handle = FindWindowEx(0, my_handle, vbNullString, vbNullString) 'ç»§ç»­æ‰¾ä¸‹ä¸€ä¸ªçª—å£
 Loop
 
 If my_handle > 0 Then Exit Function
 
 
-'µÚÈı´Î³¢ÊÔ£º ½ô½ôÁôÎÄ¼şÃû½øĞĞÆ¥Åä É¾³ıExcel
+'ç¬¬ä¸‰æ¬¡å°è¯•ï¼š ç´§ç´§ç•™æ–‡ä»¶åè¿›è¡ŒåŒ¹é… åˆ é™¤Excel
 str2 = Replace(winname, "Microsoft Excel - ", "")
-my_handle = FindWindowEx(0, 0, vbNullString, vbNullString) 'ËÑË÷µÚÒ»¸ö´°¿Ú,µÚÒ»¸ö0´ú±íwindows×ÀÃæ£¬µÚ¶ş¸ö0´ú±íÕÒµÚ0¸ö×Ó´°¿ÚµÄÏÂÒ»¸ö´°¿Ú
-  Do While my_handle <> 0 'ÕÒµ½´°¿ÚµÄ»°
+my_handle = FindWindowEx(0, 0, vbNullString, vbNullString) 'æœç´¢ç¬¬ä¸€ä¸ªçª—å£,ç¬¬ä¸€ä¸ª0ä»£è¡¨windowsæ¡Œé¢ï¼Œç¬¬äºŒä¸ª0ä»£è¡¨æ‰¾ç¬¬0ä¸ªå­çª—å£çš„ä¸‹ä¸€ä¸ªçª—å£
+  Do While my_handle <> 0 'æ‰¾åˆ°çª—å£çš„è¯
     DoEvents
-    my_title = String$(100, Chr$(0)) 'APIµ÷ÓÃÖ»½ÓÊÜ¶¨³¤×Ö·û´®£¬ËùÒÔÒªÃ´ÉùÃ÷Îª as string * ³¤¶È£¬ÒªÃ´¾ÍÓÃÕâÀïµÄÓï¾ä¸ñÊ½»¯Ò»ÏÂ
+    my_title = String$(100, Chr$(0)) 'APIè°ƒç”¨åªæ¥å—å®šé•¿å­—ç¬¦ä¸²ï¼Œæ‰€ä»¥è¦ä¹ˆå£°æ˜ä¸º as string * é•¿åº¦ï¼Œè¦ä¹ˆå°±ç”¨è¿™é‡Œçš„è¯­å¥æ ¼å¼åŒ–ä¸€ä¸‹
     title_len = GetWindowText(my_handle, my_title, Len(my_title))
-    If title_len > 0 Then    'Èç¹û´°¿Ú±êÌâ´æÔÚ£¬ÄÇÃ´¾Í»á·µ»Ø´°¿Ú±êÌâµÄ³¤¶È
+    If title_len > 0 Then    'å¦‚æœçª—å£æ ‡é¢˜å­˜åœ¨ï¼Œé‚£ä¹ˆå°±ä¼šè¿”å›çª—å£æ ‡é¢˜çš„é•¿åº¦
         j = j + 1
         str1 = ""
-        str1 = Left$(my_title, title_len) '°´³¤¶È½ØÈ¡½á¹û¼´¿É
+        str1 = Left$(my_title, title_len) 'æŒ‰é•¿åº¦æˆªå–ç»“æœå³å¯
         'If Len(str1) > Len(winname) Then
         'str1 = Left(str1, Len(winname))
        ' End If
@@ -520,7 +520,7 @@ my_handle = FindWindowEx(0, 0, vbNullString, vbNullString) 'ËÑË÷µÚÒ»¸ö´°¿Ú,µÚÒ»¸
           
         End If
     End If
-    my_handle = FindWindowEx(0, my_handle, vbNullString, vbNullString) '¼ÌĞøÕÒÏÂÒ»¸ö´°¿Ú
+    my_handle = FindWindowEx(0, my_handle, vbNullString, vbNullString) 'ç»§ç»­æ‰¾ä¸‹ä¸€ä¸ªçª—å£
 Loop
 'If my_handle = 0 Then MsgBox "Can Not Find Window:" & winname
 End Function
@@ -542,7 +542,7 @@ Function MEMO_Check_Win_Open(win_tit As String, Pic_s As StdPicture, Optional By
 
 
 'Dim mpic_L As New C_Pic
-'±¾º¯ÊıÓÃÓÚÅĞ¶ÏÖ¸¶¨´°¿ÚÊÇ·ñ´æÔÚ
+'æœ¬å‡½æ•°ç”¨äºåˆ¤æ–­æŒ‡å®šçª—å£æ˜¯å¦å­˜åœ¨
 MEMO_Check_Win_Open = False
 Dim continue_b As Boolean
 continue_b = True
@@ -605,23 +605,23 @@ End Function
 
 
 Private Function GetPosi(Pic_s As StdPicture, Pic_L As StdPicture, Optional ByRef x As Integer, Optional ByRef y As Integer) As Boolean
-'´ò¿ªÁ½ÕÅÍ¼
+'æ‰“å¼€ä¸¤å¼ å›¾
 GetPosi = False
 'Dim Pic_S As StdPicture
 'Dim Pic_L As StdPicture
 'Set Pic_L = LoadPicture(flfp_large_pic)
 'Set Pic_S = LoadPicture(flfp_small_pic)
-Dim iWidth_S As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¿í¶È
-Dim iHeight_S As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
-Dim iWidth_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¿í¶È
-Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
+Dim iWidth_S As Integer    'ä»¥åƒç´ ä¸ºå•ä½çš„å›¾å½¢å®½åº¦
+Dim iHeight_S As Integer    'ä»¥åƒç´ ä¸ºå•ä½çš„å›¾å½¢é«˜åº¦
+Dim iWidth_L As Integer    'ä»¥åƒç´ ä¸ºå•ä½çš„å›¾å½¢å®½åº¦
+Dim iHeight_L As Integer    'ä»¥åƒç´ ä¸ºå•ä½çš„å›¾å½¢é«˜åº¦
 
     Dim bits_L() As Byte
-    Dim bits_S() As Byte    'ÈıÎ¬Êı×é£¬ÓÃÓÚ»ñÈ¡Ô­²ÊÉ«Í¼ÏñÖĞ¸÷ÏñËØµÄRGBÊıÖµÒÔ¼°´æ·Å×ª»¯ºóµÄ»Ò¶ÈÖµ
-    Dim bitsBW() As Byte    'ÈıÎ¬Êı×é£¬ÓÃÓÚ´æ·Å×ª»¯ÎªºÚ°×Í¼ºó¸÷ÏñËØµÄÖµ
+    Dim bits_S() As Byte    'ä¸‰ç»´æ•°ç»„ï¼Œç”¨äºè·å–åŸå½©è‰²å›¾åƒä¸­å„åƒç´ çš„RGBæ•°å€¼ä»¥åŠå­˜æ”¾è½¬åŒ–åçš„ç°åº¦å€¼
+    Dim bitsBW() As Byte    'ä¸‰ç»´æ•°ç»„ï¼Œç”¨äºå­˜æ”¾è½¬åŒ–ä¸ºé»‘ç™½å›¾åå„åƒç´ çš„å€¼
     
     
-    '»ñÈ¡Í¼ĞÎµÄ¿í¶ÈºÍ¸ß¶È
+    'è·å–å›¾å½¢çš„å®½åº¦å’Œé«˜åº¦
     iWidth_L = Pic_L.Width * HIMETRIC_PER_PIXEL
     iHeight_L = Pic_L.Height * HIMETRIC_PER_PIXEL
     
@@ -638,7 +638,7 @@ Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
         .biWidth = iWidth_L
         .biHeight = iHeight_L
     End With
-    'ÖØĞÂ¶¨ÒåÊı×é´óĞ¡
+    'é‡æ–°å®šä¹‰æ•°ç»„å¤§å°
     ReDim bits_L(0 To 3, 0 To iWidth_L - 1, 0 To iHeight_L - 1) As Byte
     
     
@@ -651,7 +651,7 @@ Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
         .biWidth = iWidth_S
         .biHeight = iHeight_S
     End With
-    'ÖØĞÂ¶¨ÒåÊı×é´óĞ¡
+    'é‡æ–°å®šä¹‰æ•°ç»„å¤§å°
     ReDim bits_S(0 To 3, 0 To iWidth_S - 1, 0 To iHeight_S - 1) As Byte
     
     
@@ -664,7 +664,7 @@ Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
     
 
      
-    'Ê¹ÓÃGetDIBits·½·¨Ò»´ÎĞÔ»ñÈ¡picture1ÖĞ¸÷µãµÄrgbÖµ£¬±Èpoint·½·¨»ògetPixelº¯ÊıÖğÏñËØ»ñÈ¡ÏñËØrgbÒª¿ì³öÒ»¸öÊıÁ¿¼¶
+    'ä½¿ç”¨GetDIBitsæ–¹æ³•ä¸€æ¬¡æ€§è·å–picture1ä¸­å„ç‚¹çš„rgbå€¼ï¼Œæ¯”pointæ–¹æ³•æˆ–getPixelå‡½æ•°é€åƒç´ è·å–åƒç´ rgbè¦å¿«å‡ºä¸€ä¸ªæ•°é‡çº§
     GetDIBits hDCmem, Pic_L.Handle, 0&, iHeight_L, bits_L(0, 0, 0), bi24BitInfo_L, DIB_RGB_COLORS
     
     'DeleteDC hDCmem
@@ -729,25 +729,25 @@ Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
         For i = 0 To iWidth_L - iWidth_S - 1
         
         
-            'ÅĞ¶Ï µã Key1_x,Key1_y ÊÇ·ñÏàÍ¬
+            'åˆ¤æ–­ ç‚¹ Key1_x,Key1_y æ˜¯å¦ç›¸åŒ
             
             If bits_L(2, i + key1_x, j + key1_y) <> bits_S(2, key1_x, key1_y) Then GoTo ExitLine: 'R
             If bits_L(1, i + key1_x, j + key1_y) <> bits_S(1, key1_x, key1_y) Then GoTo ExitLine: 'G
             If bits_L(0, i + key1_x, j + key1_y) <> bits_S(0, key1_x, key1_y) Then GoTo ExitLine: 'B
             
-            'ÅĞ¶Ï µã Key2_x,Key2_y ÊÇ·ñÏàÍ¬
+            'åˆ¤æ–­ ç‚¹ Key2_x,Key2_y æ˜¯å¦ç›¸åŒ
             
             If bits_L(2, i + key2_x, j + key2_y) <> bits_S(2, key2_x, key2_y) Then GoTo ExitLine: 'R
             If bits_L(1, i + key2_x, j + key2_y) <> bits_S(1, key2_x, key2_y) Then GoTo ExitLine: 'G
             If bits_L(0, i + key2_x, j + key2_y) <> bits_S(0, key2_x, key2_y) Then GoTo ExitLine: 'B
             
-            'ÅĞ¶Ï µã Key3_x,Key3_y ÊÇ·ñÏàÍ¬
+            'åˆ¤æ–­ ç‚¹ Key3_x,Key3_y æ˜¯å¦ç›¸åŒ
             
             If bits_L(2, i + key3_x, j + key3_y) <> bits_S(2, key3_x, key3_y) Then GoTo ExitLine: 'R
             If bits_L(1, i + key3_x, j + key3_y) <> bits_S(1, key3_x, key3_y) Then GoTo ExitLine: 'G
             If bits_L(0, i + key3_x, j + key3_y) <> bits_S(0, key3_x, key3_y) Then GoTo ExitLine: 'B
             
-            'ÅĞ¶Ï µã Key4_x,Key4_y ÊÇ·ñÏàÍ¬
+            'åˆ¤æ–­ ç‚¹ Key4_x,Key4_y æ˜¯å¦ç›¸åŒ
             
             If bits_L(2, i + key4_x, j + key4_y) <> bits_S(2, key4_x, key4_y) Then GoTo ExitLine: 'R
             If bits_L(1, i + key4_x, j + key4_y) <> bits_S(1, key4_x, key4_y) Then GoTo ExitLine: 'G
@@ -755,7 +755,7 @@ Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
             
             
             
-            'ÅĞ¶Ï µã Key5_x,Key5_y ÊÇ·ñÏàÍ¬
+            'åˆ¤æ–­ ç‚¹ Key5_x,Key5_y æ˜¯å¦ç›¸åŒ
             
             If bits_L(2, i + key5_x, j + key5_y) <> bits_S(2, key5_x, key5_y) Then GoTo ExitLine: 'R
             If bits_L(1, i + key5_x, j + key5_y) <> bits_S(1, key5_x, key5_y) Then GoTo ExitLine: 'G
@@ -767,7 +767,7 @@ Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
             
             
         
-            'Èç¹ûÌØÕ÷µãÏàÍ¬£¬²Å¿ªÊ¼ Ñ­»·ÅĞ¶ÏĞ¡Í¼
+            'å¦‚æœç‰¹å¾ç‚¹ç›¸åŒï¼Œæ‰å¼€å§‹ å¾ªç¯åˆ¤æ–­å°å›¾
             If bits_L(2, i, j) <> bits_S(2, 0, 0) Then GoTo ExitLine:   'R
             If bits_L(1, i, j) <> bits_S(1, 0, 0) Then GoTo ExitLine:   'G
             If bits_L(0, i, j) <> bits_S(0, 0, 0) Then GoTo ExitLine:   'B
@@ -788,7 +788,7 @@ Dim iHeight_L As Integer    'ÒÔÏñËØÎªµ¥Î»µÄÍ¼ĞÎ¸ß¶È
             
             
             
-            For j2 = 0 To iHeight_S - 2    'Ñ­»·ÅĞ¶ÏĞ¡Í¼Æ¬
+            For j2 = 0 To iHeight_S - 2    'å¾ªç¯åˆ¤æ–­å°å›¾ç‰‡
                 For i2 = 0 To iWidth_S - 2
 
 
@@ -810,8 +810,8 @@ ExitLine:
 Next j
 
 
-'±È½ÏÁ½ÕÅÍ¼
-'¸ø³ö·µ»ØÖµ
+'æ¯”è¾ƒä¸¤å¼ å›¾
+'ç»™å‡ºè¿”å›å€¼
 End Function
 Public Function delay(milliseconds As Long)
 Dim delay_time As Double, start, now
@@ -848,7 +848,7 @@ End Function
 
 Private Function Print_window_Memo(Optional ByVal win_title As String = Empty) As StdPicture
 
-'fln_bmp,Ä¿±êÎÄ¼şÃûºÏ·¨ĞÔ¼ì²â
+'fln_bmp,ç›®æ ‡æ–‡ä»¶ååˆæ³•æ€§æ£€æµ‹
 Dim continue_b As Boolean
 continue_b = True
 
@@ -877,7 +877,7 @@ Else
     Loop
     
     
-    '´°ÌåÃû³Æ±ØĞë´æÔÚ²¢ÇÒÕıÈ·
+    'çª—ä½“åç§°å¿…é¡»å­˜åœ¨å¹¶ä¸”æ­£ç¡®
     
     'AppActivate "Microsoft Excel (Product Activation Failed) - PX0495_CN.305872_TKSE_20190521_NEWSAP.xlsm"
     
@@ -898,7 +898,7 @@ End Function
 
 
 Function my_actwindow(wdn As String) As Boolean
-'¼¤»î´°¿Ú,
+'æ¿€æ´»çª—å£,
 On Error GoTo Errorhand
 AppActivate wdn
 my_actwindow = True
