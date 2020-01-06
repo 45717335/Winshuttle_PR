@@ -16,16 +16,16 @@ Public key As String
 
 
 
-'å±€éƒ¨å˜é‡ï¼Œä¿å­˜é›†åˆ
+'¾Ö²¿±äÁ¿£¬±£´æ¼¯ºÏ
 Private mCol As Collection
 
 Public Function Add(key As String, Optional sKey As String) As OneKeyCls
-    'åˆ›å»ºæ–°å¯¹è±¡
+    '´´½¨ĞÂ¶ÔÏó
     Dim objNewMember As OneKeyCls
     Set objNewMember = New OneKeyCls
 
 
-    'è®¾ç½®ä¼ å…¥æ–¹æ³•çš„å±æ€§
+    'ÉèÖÃ´«Èë·½·¨µÄÊôĞÔ
     objNewMember.key = key
     If Len(sKey) = 0 Then
         mCol.Add objNewMember
@@ -34,21 +34,21 @@ Public Function Add(key As String, Optional sKey As String) As OneKeyCls
     End If
 
 
-    'è¿”å›å·²åˆ›å»ºçš„å¯¹è±¡
+    '·µ»ØÒÑ´´½¨µÄ¶ÔÏó
     Set Add = objNewMember
     Set objNewMember = Nothing
 
 
 End Function
 
-'ä¸‹é¢ åšäº† é”™è¯¯å¤„ç†ï¼å½“ æ²¡æœ‰ å…³é”®å­— çš„æ—¶å€™ å°±ä¼šè¿”å›Nothingäº†ã€‚
+'ÏÂÃæ ×öÁË ´íÎó´¦Àí£¡µ± Ã»ÓĞ ¹Ø¼ü×Ö µÄÊ±ºò ¾Í»á·µ»ØNothingÁË¡£
 Public Property Get Item(vntIndexKey As Variant) As OneKeyCls
     Err.Clear
     On Error GoTo GetItemError
-    'å¼•ç”¨é›†åˆä¸­çš„ä¸€ä¸ªå…ƒç´ æ—¶ä½¿ç”¨ã€‚
-    'vntIndexKey åŒ…å«é›†åˆçš„ç´¢å¼•æˆ–å…³é”®å­—ï¼Œ
-    'è¿™æ˜¯ä¸ºä»€ä¹ˆè¦å£°æ˜ä¸º Variant çš„åŸå› 
-    'è¯­æ³•ï¼šSet foo = x.Item(xyz) or Set foo = x.Item(5)
+    'ÒıÓÃ¼¯ºÏÖĞµÄÒ»¸öÔªËØÊ±Ê¹ÓÃ¡£
+    'vntIndexKey °üº¬¼¯ºÏµÄË÷Òı»ò¹Ø¼ü×Ö£¬
+    'ÕâÊÇÎªÊ²Ã´ÒªÉùÃ÷Îª Variant µÄÔ­Òò
+    'Óï·¨£ºSet foo = x.Item(xyz) or Set foo = x.Item(5)
     Set Item = mCol(vntIndexKey)
     Exit Property
 
@@ -60,15 +60,15 @@ End Property
 
 
 Public Property Get Count() As Long
-    'æ£€ç´¢é›†åˆä¸­çš„å…ƒç´ æ•°æ—¶ä½¿ç”¨ã€‚è¯­æ³•ï¼šDebug.Print x.Count
+    '¼ìË÷¼¯ºÏÖĞµÄÔªËØÊıÊ±Ê¹ÓÃ¡£Óï·¨£ºDebug.Print x.Count
     Count = mCol.Count
 End Property
 
 
 Public Sub Remove(vntIndexKey As Variant)
-    'åˆ é™¤é›†åˆä¸­çš„å…ƒç´ æ—¶ä½¿ç”¨ã€‚
-    'vntIndexKey åŒ…å«ç´¢å¼•æˆ–å…³é”®å­—ï¼Œè¿™æ˜¯ä¸ºä»€ä¹ˆè¦å£°æ˜ä¸º Variant çš„åŸå› 
-    'è¯­æ³•ï¼šx.Remove(xyz)
+    'É¾³ı¼¯ºÏÖĞµÄÔªËØÊ±Ê¹ÓÃ¡£
+    'vntIndexKey °üº¬Ë÷Òı»ò¹Ø¼ü×Ö£¬ÕâÊÇÎªÊ²Ã´ÒªÉùÃ÷Îª Variant µÄÔ­Òò
+    'Óï·¨£ºx.Remove(xyz)
 
 
     mCol.Remove vntIndexKey
@@ -76,24 +76,24 @@ End Sub
 
 
 Public Property Get NewEnum() As IUnknown
-    'æœ¬å±æ€§å…è®¸ç”¨ For...Each è¯­æ³•æšä¸¾è¯¥é›†åˆã€‚
+    '±¾ÊôĞÔÔÊĞíÓÃ For...Each Óï·¨Ã¶¾Ù¸Ã¼¯ºÏ¡£
     Set NewEnum = mCol.[_NewEnum]
 End Property
 
 
 Private Sub Class_Initialize()
-    'åˆ›å»ºç±»ååˆ›å»ºé›†åˆ
+    '´´½¨Ààºó´´½¨¼¯ºÏ
     Set mCol = New Collection
 End Sub
 
 
 Private Sub Class_Terminate()
-    'ç±»ç»ˆæ­¢åç ´åé›†åˆ
+    'ÀàÖÕÖ¹ºóÆÆ»µ¼¯ºÏ
     Set mCol = Nothing
 End Sub
 
 Public Function To_excel(fdn As String)
-    'æœ¬å‡½æ•°ç”¨äºå°†æ•°æ®åˆ°å‡ºåˆ°æŒ‡å®šæ–‡ä»¶å¤¹
+    '±¾º¯ÊıÓÃÓÚ½«Êı¾İµ½³öµ½Ö¸¶¨ÎÄ¼ş¼Ğ
     Dim mfso As New CFSO
     If mfso.FileExists(fdn) = False Then
         mfso.CreateFolder fdn
@@ -122,7 +122,7 @@ Public Function To_excel(fdn As String)
     Next mokc0
 End Function
 Public Function To_excel_ws(ws As Worksheet)
-    'ä¸ç”¨è¿­ä»£ï¼Œå†™äº”å±‚
+    '²»ÓÃµü´ú£¬Ğ´Îå²ã
     Dim i As Long, j As Long
     Dim i1 As Long, i2 As Long, i3 As Long, i4 As Long, j1 As Long, j2 As Long, j3 As Long, j4 As Long
     i = 1
