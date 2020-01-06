@@ -7,6 +7,8 @@ Private pic4 As String
 Private pic5 As String
 Dim majjl As New C_AJJL
 Dim mfso As New CFSO
+Dim mokc_email As New OneKeyCls
+
 
 
 Function init_pic() As Boolean
@@ -111,7 +113,7 @@ Private Function read_pr(flfp_pr As String, mokc_pr As OneKeyCls) As Boolean
     read_pr = False
     If open_wb(wb, flfp_pr, True, True, "TKSY") Then
 
-        '¶¨Òå¸ñÊ½
+        'å®šä¹‰æ ¼å¼
         If ws_exist(wb, "PA") Then
             If wb.Worksheets("PA").Range("B10") = "Protocol:" And wb.Worksheets("PA").Range("A20") = "Validation" Then
 
@@ -172,11 +174,11 @@ Private Function read_pr(flfp_pr As String, mokc_pr As OneKeyCls) As Boolean
                 read_pr = True
             End If
         End If
-        '¶¨Òå¸ñÊ½
+        'å®šä¹‰æ ¼å¼
 
-        '¸³Öµ
+        'èµ‹å€¼
 
-        '¸³Öµ
+        'èµ‹å€¼
 
 
 
@@ -203,12 +205,8 @@ Function save_pr_newtemplate_VIEW(mokc As OneKeyCls, flfp As String) As Boolean
 End Function
 Function upl_spr(flfp_pr As String) As String
 
-    '·µ»ØÉÏ´«Âë
+    'è¿”å›ä¸Šä¼ ç 
     Dim wdname As String
-
-
-
-
     Dim wb As Workbook
     'open_wb wb, flfp_pr, False, True, "TKSY"
     open_wb2 wb, flfp_pr, "TKSY"
@@ -284,23 +282,23 @@ Function upl_spr(flfp_pr As String) As String
         wb.Application.StatusBar = "Run fall after 10s try again!"
         majjl.delay 10000
 
-        'ÅĞ¶ÏÊÇ·ñÓĞ µÇÂ½´°¿Ú
+        'åˆ¤æ–­æ˜¯å¦æœ‰ ç™»é™†çª—å£
         If majjl.my_findwindow("Log on to Connect") > 0 Then
             majjl.my_actwindow "Log on to Connect"
             majjl.L_CLICK_WIN "Log on to Connect", 256, 375
             majjl.delay 10000
-            'ÔÙ´Îµã£Ò£Õ£Î
+            'å†æ¬¡ç‚¹ï¼²ï¼µï¼®
             If majjl.L_CLICK_PIC(wdname, pic3, 10, 10) = False Then
                 MsgBox "CAN NOT find Run"
 
             Else
 
             End If
-            'ÔÙ´Îµã£Ò£Õ£Î
+            'å†æ¬¡ç‚¹ï¼²ï¼µï¼®
         End If
 
 
-        'ÅĞ¶ÏÊÇ·ñÓĞ µÇÂ½´°¿Ú
+        'åˆ¤æ–­æ˜¯å¦æœ‰ ç™»é™†çª—å£
 
 
         If majjl.L_CLICK_PIC(wdname, pic3, 10, 10) = False Then
@@ -339,7 +337,7 @@ Function upl_spr(flfp_pr As String) As String
     majjl.delay 1000
     ' sap on
     If majjl.L_CLICK_PIC("SAP Shuttle Logon", pic5, 10, 10) = False Then
-        'µã»÷ logon Ö®ºóÃ»ÓĞ µãµ½run ¿ÉÄÜÊÇÒòÎª³öÏÖ ÁËµÇÂ½¿ò£¬¼ì²éµÇÂ½¿ò µã»÷Ö®ºó£¬ÔÙ´Î µã»÷ run
+        'ç‚¹å‡» logon ä¹‹åæ²¡æœ‰ ç‚¹åˆ°run å¯èƒ½æ˜¯å› ä¸ºå‡ºç° äº†ç™»é™†æ¡†ï¼Œæ£€æŸ¥ç™»é™†æ¡† ç‚¹å‡»ä¹‹åï¼Œå†æ¬¡ ç‚¹å‡» run
 
         If majjl.my_findwindow("Log on to Connect") > 0 Then
             majjl.L_CLICK_WIN "Log on to Connect", 252, 375
@@ -370,21 +368,33 @@ Function upl_spr(flfp_pr As String) As String
     wb.Application.DisplayAlerts = False
     wb.SaveAs Filename:=wb.Fullname, WriteResPassword:="TKSY"
 
+'sendmail
+para4 = wb.Worksheets(1).Range("C3")
+para3 = wb.Worksheets(1).Range("C10")
+If mokc_email.Item(para4) Is Nothing Then
+mokc_email.Add para4, para4
+mokc_email.Item(para4).Add para3 & wb.Fullname, para3 & wb.Fullname
+Else
+mokc_email.Item(para4).Add para3 & wb.Fullname, para3 & wb.Fullname
+End If
+'sendmail
+
+
     Close_wb2 wb
     If wb Is Nothing Then
     Else
         'MsgBox "have not close"
-        '°´¼ü¾«Áéµãok¹Ø±Õ
-        '°´¼ü¾«Áéµãok¹Ø±Õ
+        'æŒ‰é”®ç²¾çµç‚¹okå…³é—­
+        'æŒ‰é”®ç²¾çµç‚¹okå…³é—­
     End If
 
     'wb.Close 0
-    '·µ»ØÉÏ´«Âë
+    'è¿”å›ä¸Šä¼ ç 
 
 End Function
 
 Function save_pr(mokc_pr As OneKeyCls, flfp_pr As String, Optional s_template As String = "VIEW")
-    's_template ÓĞ¶àÖÖÄ£°å "VIEW","UPLOAD",...
+    's_template æœ‰å¤šç§æ¨¡æ¿ "VIEW","UPLOAD",...
     Dim para1 As String, para2 As String, para3 As String, para4 As String, para5 As String
     Dim str1 As String, str2 As String, str3 As String, str4 As String, str5 As String
     Dim wb As Workbook
@@ -399,7 +409,7 @@ End Function
 
 
 Private Function Single_V1_to_V0(flfp_pr As String) As String
-    '¼ì²éÄ¿±êÎÄ¼şÊÇ·ñÎªĞÂ°æ±¾
+    'æ£€æŸ¥ç›®æ ‡æ–‡ä»¶æ˜¯å¦ä¸ºæ–°ç‰ˆæœ¬
 
 
     Dim c10 As String
@@ -435,8 +445,8 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
 
         c10 = Get_RangeVal(wb.Worksheets(1), "C10")
 
-        '====================Èç¹û ÒÑ¾­ÊÇ¾ÉµÄ¸ñÊ½£¬²»½øĞĞ×ª»»
-        '====================Èç¹û ²»ÊÇĞÂ¸ñÊ½£¬ÍÆ³öÒ²²»½øĞĞ×ª»»£¬ERROR
+        '====================å¦‚æœ å·²ç»æ˜¯æ—§çš„æ ¼å¼ï¼Œä¸è¿›è¡Œè½¬æ¢
+        '====================å¦‚æœ ä¸æ˜¯æ–°æ ¼å¼ï¼Œæ¨å‡ºä¹Ÿä¸è¿›è¡Œè½¬æ¢ï¼ŒERROR
         If ws_exist(wb, "PA.") = False Then
             'wb.Close
             '20190108
@@ -479,9 +489,9 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
 
 
 
-        '=================================Ä£°å£¬Z:\24_Temp\PA_Logs\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
-        '=================================±¾µØÄ£°å£¬D:\VBA\EXCEL_MODULE\PR\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
-        'È¡×îĞÂµÄ¿½±´µ½±¾µØÈ»ºó´ò¿ª£¬
+        '=================================æ¨¡æ¿ï¼ŒZ:\24_Temp\PA_Logs\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
+        '=================================æœ¬åœ°æ¨¡æ¿ï¼ŒD:\VBA\EXCEL_MODULE\PR\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
+        'å–æœ€æ–°çš„æ‹·è´åˆ°æœ¬åœ°ç„¶åæ‰“å¼€ï¼Œ
         Dim fdn_NewT_Net As String
         Dim fdn_NewT_LOC As String
         Dim fln_NewT As String
@@ -508,7 +518,7 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
             End If
         End If
 
-        '===========================================================Ä£°åÔ¤ÏÈÉ¾³ıÈ«²¿ºê£¬²¢Áí´æ
+        '===========================================================æ¨¡æ¿é¢„å…ˆåˆ é™¤å…¨éƒ¨å®ï¼Œå¹¶å¦å­˜
         Dim wb_new As Workbook
         Application.DisplayAlerts = False
 
@@ -522,7 +532,7 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
         End If
         wb_new.SaveAs fdn_bak_aft & s_date & "\" & fln
 
-        '=======================¿ªÊ¼×ª»»¸ñÊ½
+        '=======================å¼€å§‹è½¬æ¢æ ¼å¼
 
 
 
@@ -546,7 +556,7 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
 
 
 
-        'È¡×îĞÂµÄ¿½±´µ½±¾µØÈ»ºó´ò¿ª£¬
+        'å–æœ€æ–°çš„æ‹·è´åˆ°æœ¬åœ°ç„¶åæ‰“å¼€ï¼Œ
         Dim i_count As Integer
         Dim str_total As String
 
@@ -588,12 +598,12 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
                 wst.Range("N" & i + 1) = wsf.Range("O" & i)
                 wst.Range("O" & i + 1) = wsf.Range("P" & i)
 
-                'O,ÑÕÉ«£¬±¸×¢Ò»²¢¸´ÖÆ
+                'O,é¢œè‰²ï¼Œå¤‡æ³¨ä¸€å¹¶å¤åˆ¶
                 If Not wsf.Range("P" & i).comment Is Nothing Then
                     wst.Range("O" & i - 1).AddComment wsf.Range("P" & i).comment.Text
                 End If
                 wst.Range("O" & i - 1).Interior.Color = wsf.Range("P" & i).Interior.Color
-                'O,ÑÕÉ«£¬±¸×¢Ò»²¢¸´ÖÆ
+                'O,é¢œè‰²ï¼Œå¤‡æ³¨ä¸€å¹¶å¤åˆ¶
                 i_count = i_count + 1
 
                 my_CDBL strb, dbl1
@@ -618,11 +628,11 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
         'wst.Range("L18") = "CNY"
         wst.Range("N19") = str_total
 
-        'ÉèÖÃ´òÓ¡ÇøÓò
+        'è®¾ç½®æ‰“å°åŒºåŸŸ
         wst.PageSetup.PrintArea = "$C$1:$P$" & i_count + 21
 
 
-        'ÉèÖÃ´òÓ¡ÇøÓò
+        'è®¾ç½®æ‰“å°åŒºåŸŸ
 
 
     End If
@@ -635,9 +645,9 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
 
     wb_new.SaveAs Filename:=wb_new.Fullname, WriteResPassword:="TKSY"
 
-    '²åÈë´úÂë
+    'æ’å…¥ä»£ç 
 
-    '²åÈë´úÂë
+    'æ’å…¥ä»£ç 
 
 
     wb_new.Close
@@ -663,7 +673,7 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
 
 
 
-    'É¾µôÔ­Ê¼ÎÄ¼ş£¬²¢¸´ÖÆĞÂ×÷µÄÎÄ¼ş
+    'åˆ æ‰åŸå§‹æ–‡ä»¶ï¼Œå¹¶å¤åˆ¶æ–°ä½œçš„æ–‡ä»¶
     'Kill flfp
     mfso.deletefile flfp
     mfso.copy_file flfp2, flfp
@@ -671,7 +681,7 @@ Private Function Single_V1_to_V0(flfp_pr As String) As String
 End Function
 
 Private Function Single_V0_to_V1_M(flfp_pr As String) As String
-    'Ö±½ÓÊÇ´øºê ´ø ÃÜÂëµÄ
+    'ç›´æ¥æ˜¯å¸¦å® å¸¦ å¯†ç çš„
     Dim str_temp As String
     str_temp = ""
 
@@ -706,9 +716,9 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
     If (fln Like "P?????_CN*.xlsm" And mfso.FileExists(fdn & fln)) Or (fln Like "M?????_CN*.xlsm" And mfso.FileExists(fdn & fln)) Or (fln Like "D?????_CN*.xlsm" And mfso.FileExists(fdn & fln)) Then
         open_wb2 wb, flfp_pr, "TKSY"
         c10 = Get_RangeVal(wb.Worksheets("PA"), "C10")
-        '====================Èç¹ûÃ»ÓĞÉèÖÃĞ´ÈëÃÜÂë±£»¤TKSYÔòÖ±½ÓÍÆ³ö£¬²»½øĞĞ×ª»»
-        '====================Èç¹ûÊÇÖ»¶Á£¬Ö±½ÓÍË³ö£¬²»½øĞĞ×ª»»¡£
-        '====================Èç¹ûC10µ¥Ôª¸ñ ¸ñÊ½²»ÊÇ¡°Purchase requisition number * created¡±Ö±½ÓÍË³ö,²»½øĞĞ×ª»»
+        '====================å¦‚æœæ²¡æœ‰è®¾ç½®å†™å…¥å¯†ç ä¿æŠ¤TKSYåˆ™ç›´æ¥æ¨å‡ºï¼Œä¸è¿›è¡Œè½¬æ¢
+        '====================å¦‚æœæ˜¯åªè¯»ï¼Œç›´æ¥é€€å‡ºï¼Œä¸è¿›è¡Œè½¬æ¢ã€‚
+        '====================å¦‚æœC10å•å…ƒæ ¼ æ ¼å¼ä¸æ˜¯â€œPurchase requisition number * createdâ€ç›´æ¥é€€å‡º,ä¸è¿›è¡Œè½¬æ¢
         If wb.ReadOnly Then
             Single_V0_to_V1_M = "Can not be readonly!"
             'MsgBox Single_V0_to_V1_M
@@ -755,9 +765,9 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
 
 
 
-        '=================================Ä£°å£¬Z:\24_Temp\PA_Logs\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
-        '=================================±¾µØÄ£°å£¬D:\VBA\EXCEL_MODULE\PR\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
-        'È¡×îĞÂµÄ¿½±´µ½±¾µØÈ»ºó´ò¿ª£¬
+        '=================================æ¨¡æ¿ï¼ŒZ:\24_Temp\PA_Logs\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
+        '=================================æœ¬åœ°æ¨¡æ¿ï¼ŒD:\VBA\EXCEL_MODULE\PR\V1.2\TEMPLATE\010c1612_Purchase Requisition(20170503).xlsm
+        'å–æœ€æ–°çš„æ‹·è´åˆ°æœ¬åœ°ç„¶åæ‰“å¼€ï¼Œ
         Dim fdn_NewT_Net As String
         Dim fdn_NewT_LOC As String
         Dim fln_NewT As String
@@ -785,7 +795,7 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
             End If
         End If
 
-        '===========================================================Ä£°åÔ¤ÏÈÉ¾³ıÈ«²¿ºê£¬²¢Áí´æ
+        '===========================================================æ¨¡æ¿é¢„å…ˆåˆ é™¤å…¨éƒ¨å®ï¼Œå¹¶å¦å­˜
         Dim wb_new As Workbook
         Application.DisplayAlerts = False
 
@@ -802,7 +812,7 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
         End If
         wb_new.SaveAs fdn_bak_aft & s_date & "\" & fln
 
-        '=======================¿ªÊ¼×ª»»¸ñÊ½
+        '=======================å¼€å§‹è½¬æ¢æ ¼å¼
 
 
 
@@ -826,7 +836,7 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
 
 
 
-        'È¡×îĞÂµÄ¿½±´µ½±¾µØÈ»ºó´ò¿ª£¬
+        'å–æœ€æ–°çš„æ‹·è´åˆ°æœ¬åœ°ç„¶åæ‰“å¼€ï¼Œ
         Dim i_count As Integer
         Dim str_total As String
 
@@ -867,12 +877,12 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
                 wst.Range("O" & i - 1) = wsf.Range("N" & i)
                 wst.Range("P" & i - 1) = wsf.Range("O" & i)
 
-                'O,ÑÕÉ«£¬±¸×¢Ò»²¢¸´ÖÆ
+                'O,é¢œè‰²ï¼Œå¤‡æ³¨ä¸€å¹¶å¤åˆ¶
                 If Not wsf.Range("O" & i).comment Is Nothing Then
                     wst.Range("P" & i - 1).AddComment wsf.Range("O" & i).comment.Text
                 End If
                 wst.Range("P" & i - 1).Interior.Color = wsf.Range("O" & i).Interior.Color
-                'O,ÑÕÉ«£¬±¸×¢Ò»²¢¸´ÖÆ
+                'O,é¢œè‰²ï¼Œå¤‡æ³¨ä¸€å¹¶å¤åˆ¶
                 i_count = i_count + 1
 
                 my_CDBL strb, dbl1
@@ -906,11 +916,11 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
         wst.Range("L18") = "CNY"
         wst.Range("N18") = str_total
 
-        'ÉèÖÃ´òÓ¡ÇøÓò
+        'è®¾ç½®æ‰“å°åŒºåŸŸ
         wst.PageSetup.PrintArea = "$C$1:$P$" & i_count + 20
 
 
-        'ÉèÖÃ´òÓ¡ÇøÓò
+        'è®¾ç½®æ‰“å°åŒºåŸŸ
 
 
     End If
@@ -923,9 +933,9 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
 
     wb_new.SaveAs Filename:=wb_new.Fullname, WriteResPassword:="TKSY"
 
-    '²åÈë´úÂë
+    'æ’å…¥ä»£ç 
 
-    '²åÈë´úÂë
+    'æ’å…¥ä»£ç 
 
 
     wb_new.Close
@@ -939,7 +949,7 @@ Private Function Single_V0_to_V1_M(flfp_pr As String) As String
 
 
 
-    'É¾µôÔ­Ê¼ÎÄ¼ş£¬²¢¸´ÖÆĞÂ×÷µÄÎÄ¼ş
+    'åˆ æ‰åŸå§‹æ–‡ä»¶ï¼Œå¹¶å¤åˆ¶æ–°ä½œçš„æ–‡ä»¶
     'Kill flfp
     mfso.deletefile flfp
 
@@ -975,7 +985,7 @@ Function get_rowscount(wsf As Worksheet) As Integer
 End Function
 
 
-'´øÈİ´íµÄ£¬ÎÄ×Ö×ª»»ÎªÊıÖµ
+'å¸¦å®¹é”™çš„ï¼Œæ–‡å­—è½¬æ¢ä¸ºæ•°å€¼
 Function my_CDBL(s_in As String, ByRef ff As Double) As Boolean
     my_CDBL = True
     On Error GoTo Errorhand
@@ -991,7 +1001,7 @@ Function winshuttle_studio_pr(wb As Workbook) As Boolean
     Set wb_template = wb.Application.Workbooks.Open("Z:\24_Temp\PA_Logs\V1.3\Draft_PurchaseApplication_Studio_V100.xlsm")
     If ws_exist(wb, "WinshuttleStudio") = False Then wb_template.Worksheets("WinshuttleStudio").Copy wb.Worksheets(wb.Worksheets.Count)
     If ws_exist(wb, "PA") = True Then If wb.ActiveSheet.Name <> "PA" Then wb.Worksheets("PA").Activate
-    'Ö»ÁôÁ½¸ö±í¸ñ£¬"PA" ºÍ "WinshuttleStudio"
+    'åªç•™ä¸¤ä¸ªè¡¨æ ¼ï¼Œ"PA" å’Œ "WinshuttleStudio"
     Dim ws As Worksheet
     wb.Application.DisplayAlerts = False
 
@@ -1010,14 +1020,33 @@ Function winshuttle_studio_pr(wb As Workbook) As Boolean
 End Function
 
 Sub test()
-    If majjl.my_findwindow("WinshuttleStudioAddin") > 0 Then
-        majjl.my_actwindow "WinshuttleStudioAddin"
+    'If majjl.my_findwindow("WinshuttleStudioAddin") > 0 Then
+    '    majjl.my_actwindow "WinshuttleStudioAddin"''
+    ''
+    '        majjl.L_CLICK_WIN "WinshuttleStudioAddin", 425, 96
+    ''        majjl.delay 10000
+    '       'å†æ¬¡ç‚¹ï¼²ï¼µï¼®'
 
-        majjl.L_CLICK_WIN "WinshuttleStudioAddin", 425, 96
-        majjl.delay 10000
-        'ÔÙ´Îµã£Ò£Õ£Î
+    ' End If
+    
+    'sendmail
+    Dim para4 As String
+    Dim para3 As String
+    
+para4 = "GXF"
+para3 = "PRnumb1"
 
-    End If
+If mokc_email.Item(para4) Is Nothing Then
+mokc_email.Add para4, para4
+mokc_email.Item(para4).Add para3 & " wb.Fullname", para3 & " wb.Fullname"
+Else
+mokc_email.Item(para4).Add para3 & " wb.Fullname", para3 & " wb.Fullname"
+End If
+
+'sendmail
+
+    send_email
+    
 
 
 End Sub
@@ -1111,7 +1140,7 @@ Sub PRU()
 
 
 
-                        'ÖØĞÂ´ò¿ªÁ¬½Ó
+                        'é‡æ–°æ‰“å¼€è¿æ¥
 
 
                         myCon.Open "Provider=Microsoft.Jet.OLEDB.4.0;" & _
@@ -1131,7 +1160,7 @@ Sub PRU()
 
 
 
-                        'ÖØĞÂ´ò¿ªÁ¬½Ó
+                        'é‡æ–°æ‰“å¼€è¿æ¥
 
 
                         .Fields(4).Value = s_prto
@@ -1150,7 +1179,7 @@ Sub PRU()
                 ElseIf mfso.FileExists(str1) = False Then
                     .Fields(1).Value = "NOT_EXIST"
                 ElseIf .Fields(1).Value = "DOING_" & usname Then
-                    'ÒòÎªÖ»ÓĞÒ»Ì¨µçÄÔÄÜ¹»ÉÏ´«£¬ËùÒÔÒâÍâÖĞ¶ÏÖ®ºó£¬»¹ÊÇĞèÒªÖØĞÂÉÏ´«µÄ
+                    'å› ä¸ºåªæœ‰ä¸€å°ç”µè„‘èƒ½å¤Ÿä¸Šä¼ ï¼Œæ‰€ä»¥æ„å¤–ä¸­æ–­ä¹‹åï¼Œè¿˜æ˜¯éœ€è¦é‡æ–°ä¸Šä¼ çš„
                     .Fields(1).Value = "TOBEDONE"
 
                 End If
@@ -1203,7 +1232,7 @@ End Sub
 
 
 Private Function Read_Only(str1 As String) As Boolean
-    '±¾º¯ÊıÓÃÓÚÅĞ¶ÏÒ»¸öµç×Ó±í¸ñÊÇ·ñÎªÖ»¶Á£¬ÊÇÖ»¶ÁÔò·µ»Ø£Ô£ò£õ£å²¢ÇÒÔÚ¡¡£Ä£º£Ü£Å£Ò£Ò£Ï£Ò£Ü£Å£ò£ò£ï£ò£®£ô£ø£ô¡¡¼ÇÂ¼£¬²¢´ò¿ªÎÄ¼ş¼Ğ
+    'æœ¬å‡½æ•°ç”¨äºåˆ¤æ–­ä¸€ä¸ªç”µå­è¡¨æ ¼æ˜¯å¦ä¸ºåªè¯»ï¼Œæ˜¯åªè¯»åˆ™è¿”å›ï¼´ï½’ï½•ï½…å¹¶ä¸”åœ¨ã€€ï¼¤ï¼šï¼¼ï¼¥ï¼²ï¼²ï¼¯ï¼²ï¼¼ï¼¥ï½’ï½’ï½ï½’ï¼ï½”ï½˜ï½”ã€€è®°å½•ï¼Œå¹¶æ‰“å¼€æ–‡ä»¶å¤¹
     Dim f As String
     f = "D:\ERROR\error.txt"
     Dim mfso As New CFSO
@@ -1233,16 +1262,47 @@ End Function
 
 
 Sub pru_and_prc()
+
+
     Dim wshShell As Object
-     Set wshShell = CreateObject("WScript.Shell")
+    Set wshShell = CreateObject("WScript.Shell")
     Dim i As Integer
     For i = 1 To 2000
         PRU
         Application.StatusBar = "restart at:" & Format(now() + CDate("00:05:00"), "YYYY-MM-DD HH:MM:SS")
+        send_email
         majjl.delay 300000
         wshShell.SendKeys "{NUMLOCK}"
         majjl.delay 500
         wshShell.SendKeys "{NUMLOCK}"
     Next
+
+End Sub
+Private Sub send_email()
+    Dim wb As Workbook
+    Set wb = ThisWorkbook
+    Dim ws As Worksheet
+    Set ws = wb.ActiveSheet
+    Dim para1 As String, para2 As String, para3 As String, para4 As String
+    Dim str1 As String, str2 As String, str3 As String, str4 As String
+    Dim j As Integer
+    Dim i As Integer
+    If mokc_email.Count > 0 Then
+        For i = 1 To mokc_email.Count
+            str1 = mokc_email.Item(i).key
+            para1 = get_para_rg(ws.Range("A2:Z2"), str1, "N")
+            If para1 = "" Then
+            para1 = get_para_rg(ws.Range("A2:Z2"), str1, "Y")
+            End If
+            para2 = ""
+            If para1 Like "*@thyssenkrupp.com" Then
+                For j = 1 To mokc_email.Item(i).Count
+                    para2 = para2 & mokc_email.Item(i).Item(j).key & Chr(10)
+                Next
+            End If
+            SendMail para1, "PR UP LOADING FINISH", para2, ""
+        Next
+        mokc_email.ClearAll
+    End If
 End Sub
 
