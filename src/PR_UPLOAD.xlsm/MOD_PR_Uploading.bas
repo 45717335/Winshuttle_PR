@@ -1,4 +1,3 @@
-Attribute VB_Name = "MOD_PR_Uploading"
 Option Explicit
 Private pic1 As String
 Private pic2 As String
@@ -300,9 +299,10 @@ Function upl_spr(flfp_pr As String) As String
 
         '判断是否有 登陆窗口
 
-
+        
         If majjl.L_CLICK_PIC(wdname, pic3, 10, 10) = False Then
-            MsgBox "Can NOt find Run,Please find manually"
+            'MsgBox "Can NOt find Run,Please find manually"
+            majjl.delay 5000
         Else
             wb.Application.StatusBar = "Run Clicked!"
             majjl.delay 1000
@@ -1290,19 +1290,42 @@ Private Sub send_email()
     If mokc_email.Count > 0 Then
         For i = 1 To mokc_email.Count
             str1 = mokc_email.Item(i).key
-            para1 = get_para_rg(ws.Range("A2:Z2"), str1, "N")
+            para1 = get_para_rg(ws.Range("A2:Z3"), str1, "N")
+            
             If para1 = "" Then
-            para1 = get_para_rg(ws.Range("A2:Z2"), str1, "Y")
+            '查询服务器上 Z:\24_Temp\PA_Logs\TOOLS\Winshuttle_auto\Email\是否存在，如果存在取
+            para1 = get_email_address(str1)
+            If para1 Like "*@thyssenkrupp.com" Then
+            write_para_rg ws.Range("A2:Z3"), str1, para1
             End If
+            End If
+        
+            If para1 = "" Then
+            'para1 = get_para_rg(ws.Range("A2:Z3"), str1, "Y")
+            End If
+            
             para2 = ""
             If para1 Like "*@thyssenkrupp.com" Then
                 For j = 1 To mokc_email.Item(i).Count
                     para2 = para2 & mokc_email.Item(i).Item(j).key & Chr(10)
                 Next
-            End If
             SendMail para1, "PR UP LOADING FINISH", para2, ""
+            End If
         Next
         mokc_email.ClearAll
     End If
 End Sub
-
+Private Function get_email_address(fln As String) As String
+Dim str3 As String, str2 As String
+Dim fs As Object, a As Object
+str3 = "Z:\24_Temp\PA_Logs\TOOLS\Winshuttle_auto\Email\"
+If Right(fln, 4) <> ".txt" Then fln = fln & ".txt"
+Set fs = CreateObject("Scripting.FileSystemObject")
+On Error GoTo Errorhand
+Set a = fs.OpenTextFile(str3 & fln)
+get_email_address = a.Readall
+a.Close
+Exit Function
+Errorhand:
+get_email_address = ""
+End Function
