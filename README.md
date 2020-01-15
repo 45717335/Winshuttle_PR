@@ -14,4 +14,4 @@ Sub SendMail(ByVal to_who As String, ByVal subject As String, ByVal body As Stri
 ```VBA
 Private Function get_email_address(fln As String) As String
 ```
-[函数连接](https://github.com/45717335/Winshuttle_PR/blob/master/src/PR_UPLOAD.xlsm/MOD_Email.bas)
+[函数连接](https://github.com/45717335/Winshuttle_PR/blob/master/src/PR_UPLOAD.xlsm/MOD_PR_Uploading.bas)
